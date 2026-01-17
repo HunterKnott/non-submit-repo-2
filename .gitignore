@@ -1,5 +1,8 @@
 # Dependencies
 node_modules/
 
+# Next.js
+/.next/
+
 # Local env files
 .env*.local
