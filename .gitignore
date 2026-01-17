@@ -6,3 +6,6 @@ node_modules/
 
 # Local env files
 .env*.local
+
+# Data files
+/data/

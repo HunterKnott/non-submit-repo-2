@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import TodoList from '@/components/TodoList';
 import ThemeToggle from '@/components/ThemeToggle';
 
 function TodoAppContent() {
@@ -13,14 +14,14 @@ function TodoAppContent() {
             {/* Background Image */}
             <div className="absolute inset-0 w-full h-80">
                 <img
-                src="/images/bg-desktop-light.jpg"
-                alt="Background"
-                className="absolute inset-0 w-full h-full object-cover dark:opacity-0 dark:pointer-events-none"
+                    src="/images/bg-desktop-light.jpg"
+                    alt="Background"
+                    className="absolute inset-0 w-full h-full object-cover dark:opacity-0 dark:pointer-events-none"
                 />
                 <img
-                src="/images/bg-desktop-dark.jpg"
-                alt="Background"
-                className="absolute inset-0 w-full h-full object-cover  opacity-0 dark:opacity-100 dark:pointer-events-auto pointer-events-none"
+                    src="/images/bg-desktop-dark.jpg"
+                    alt="Background"
+                    className="absolute inset-0 w-full h-full object-cover opacity-0 dark:opacity-100 dark:pointer-events-auto pointer-events-none"
                 />
             </div>
 
