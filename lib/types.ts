@@ -3,9 +3,11 @@ export interface Todo {
     text: string;
     completed: boolean;
     createdAt: Date;
-  }
+}
+
+export type FilterType = 'all' | 'active' | 'completed';
 
 export interface ThemeContextType {
     theme: 'light' | 'dark';
     toggleTheme: () => void;
-  }
+}

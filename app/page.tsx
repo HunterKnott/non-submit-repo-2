@@ -4,18 +4,24 @@ import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import TodoInput from '@/components/TodoInput';
 import TodoList from '@/components/TodoList';
+import FilterButtons from '@/components/FilterButtons';
 import ThemeToggle from '@/components/ThemeToggle';
-import { Todo } from '@/lib/types';
+import { Todo, FilterType } from '@/lib/types';
 
 function TodoAppContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const filter = (searchParams.get('filter') as FilterType) || 'all';
     
     const [todos, setTodos] = useState<Todo[]>([]);
 
+    useEffect(() => {
+        fetchTodos();
+    }, [filter]);
+
     const fetchTodos = async () => {
         try {
-            const response = await fetch(`/api/todos`);
+            const response = await fetch(`/api/todos?filter=${filter}`);
             const data = await response.json();
             setTodos(data);
         } catch (error) {
@@ -38,6 +44,13 @@ function TodoAppContent() {
             console.error('Failed to add todo:', error);
             throw error;
         }
+    };
+
+    const handleFilterChange = (newFilter: FilterType) => {
+        // Update URL query params to maintain filter state on page refresh
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('filter', newFilter);
+        router.push(`?${params.toString()}`);
     };
 
     return (
@@ -74,7 +87,19 @@ function TodoAppContent() {
                 <div className="mb-6 rounded-lg shadow-2xl">
                     <TodoList 
                         initialTodos={todos} 
+                        filter={filter}
+                        onFilterChange={handleFilterChange}
                     />
+                </div>
+
+                {/* Filter Buttons for Mobile */}
+                <div className="md:hidden">
+                    <div className="bg-light-gray-very-light dark:bg-dark-desaturated-blue-very-dark rounded-lg shadow-lg px-5 py-4 transition-colors duration-300">
+                        <FilterButtons
+                        currentFilter={filter}
+                        onFilterChange={handleFilterChange}
+                        />
+                    </div>
                 </div>
             </div>
         </div>
